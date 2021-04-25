@@ -1,14 +1,8 @@
 #!/bin/bash
 set -e
 
-# Get source dir
-SOURCE="${BASH_SOURCE[0]}"
-while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
-  DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
-  SOURCE="$(readlink "$SOURCE")"
-  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
-done
-DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
 
 
 # install all programms required
@@ -18,8 +12,7 @@ xargs sudo apt-get install -y <$DIR/package.list
 sudo chsh -s $(which zsh)
 
 # install oh-my-zsh
-export ZSH="$DIR/oh-my-zsh"
-echo -e "export ZSH=\"$ZSH/\"" >> ~/.profile
+ZSH="$DIR/oh-my-zsh"
 
 if [[ ! -d $ZSH ]]
 then

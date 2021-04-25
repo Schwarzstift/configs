@@ -14,5 +14,6 @@ DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
 dirlist=$(find $1 -mindepth 1 -maxdepth 1 -type d ! -iname ".*")
 for dir in $dirlist
 do 
-    $dir/install.sh    
+    echo "Installing $dir"
+    $dir/install.sh  >/dev/null 2>&1
 done
